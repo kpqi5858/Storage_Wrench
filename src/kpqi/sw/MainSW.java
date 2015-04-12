@@ -15,6 +15,9 @@ public class MainSW extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new SWEvent(), this);
 		CustomConfig.reloadCustomConfig();
+		getLogger().info("!--Storage Wrench--!");
+		getLogger().info("Made by ¡×aKpqi5858");
+		getLogger().info("Kpqi5858ÀÌ ¸¸µë.");
 	}
 	
 	public void onDisable() {
