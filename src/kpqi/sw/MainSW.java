@@ -17,7 +17,7 @@ public class MainSW extends JavaPlugin {
 		CustomConfig.reloadCustomConfig();
 		getLogger().info("!--Storage Wrench--!");
 		getLogger().info("Made by ¡×aKpqi5858");
-		getLogger().info("Kpqi5858ÀÌ ¸¸µë.");
+		getLogger().info("Kpqi5858ÀÌ ¸¸µë."); //Korean
 	}
 	
 	public void onDisable() {
