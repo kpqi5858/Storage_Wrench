@@ -8,6 +8,8 @@ import kpqi.sw.utill.SID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.BrewingStand;
+import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,7 +43,7 @@ public class SWEvent implements Listener {
 		if (e.getPlayer().isSneaking() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			try {
 				
-			if (e.getClickedBlock().getState() instanceof InventoryHolder) {
+			if (e.getClickedBlock().getState() instanceof InventoryHolder && !(e.getClickedBlock().getState() instanceof Furnace) && !(e.getClickedBlock().getState() instanceof BrewingStand)) {
 				Player p = e.getPlayer();
 				if (p.hasPermission(SWPermissions.WRENCH_STORAGE)) {
 					
@@ -84,7 +86,7 @@ public class SWEvent implements Listener {
 		case TRAPPED_CHEST: return true;
 		case DISPENSER: return true;
 		case DROPPER: return true;
-		case BREWING_STAND: return true;
+		//case BREWING_STAND: return true;
 		
 		default: return false;
 		
