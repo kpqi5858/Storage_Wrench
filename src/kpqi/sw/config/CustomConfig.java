@@ -84,12 +84,14 @@ public class CustomConfig {
 	    return customConfig;
 	}
 	
-	public static void setupWrenched(ItemStack[] i, SID c) {
+	public static void setupWrenched(ItemStack[] i, SID c, String uid) {
 		gcc().options().copyDefaults(true);
 		for (int a = 0; a < i.length; a++) {
-			gcc().addDefault("sw." + c.toString() + "." + a, i[a]);
+			gcc().set("sw." + c.toString() + "." + a, i[a]);
 		}
-		gcc().addDefault("sw." + c.toString() + ".length", i.length);
+		gcc().set("sw." + c.toString() + ".length", i.length);
+		gcc().set("sw." + c.toString() + ".private", false);
+		gcc().set("sw." + c.toString() + ".player", uid);
 		saveCustomConfig();
 		reloadCustomConfig();
 	}
@@ -104,5 +106,46 @@ public class CustomConfig {
 		}
 		
 		return it;
+	}
+	
+	public static boolean isPrivate(SID c) {
+		return gcc().getBoolean("sw." + c.toString() + ".private");
+	}
+	
+	public static boolean isCorrectPlayer(SID c, String uuid) {
+		String uid = gcc().getString("sw." + c.toString() + ".player");
+		boolean lock = gcc().getBoolean("sw." + c.toString() + ".private");
+		
+		if (!lock) return true;
+		if (uid == null) return true;
+		if (uid.equals(uuid)) return true;
+		
+		return false;
+	}
+	
+	public static void setPrivate(SID c, boolean pri, String uuid) {
+		gcc().options().copyDefaults(true);
+		gcc().set("sw." + c.toString() + ".private", pri);
+		
+		gcc().set("sw." + c.toString() + ".player",uuid);
+		
+		saveCustomConfig();
+		reloadCustomConfig();
+	}
+	
+	public static void delete(SID c) {
+		FileConfiguration f = gcc();
+		gcc().options().copyDefaults(true);
+		int length = getWrenched(c).length;
+		
+		for (int i = 0; i < length; i++) {
+			f.set("sw." + c.toString() + "." + i, null);
+			
+		}
+		f.set("sw." + c.toString() + ".length", null);
+		f.set("sw." + c.toString() + ".enable", true);
+		f.set("sw." + c.toString() + ".enable", null);
+		saveCustomConfig();
+		reloadCustomConfig();
 	}
 }
